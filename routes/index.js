@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res)=>{
-    res.json("Servidor funcionando");
+    res.json({message: "Servidor en funcionamiento."});
 });
 
 module.exports = router;

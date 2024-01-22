@@ -4,9 +4,6 @@ async function session(req, res){
     try{
         const session = await saes.session();
 
-        res.cookie('saesSESSION', session.credential, {
-            sameSite: 'none'
-        });
         res.json(session);
     }
     catch(error){
@@ -18,42 +15,29 @@ async function session(req, res){
 }
 
 async function login(req, res){
-    if(req.cookies['saesSESSION']){
-        const loginData = {
-            ...req.body,
-            credential: req.cookies['saesSESSION']
-        };
+    const loginData = req.body;
+
+    try{
+        const credential = await saes.authenticate(loginData);
     
-        try{
-            const credential = await saes.authenticate(loginData);
-        
-            const login = credential? {
-                username: loginData.username,
-                credential,
-                time: Date.now(),
-                updateAfter: Date.now() + 15*60*1000,
-                expires: Date.now() + 30*60*1000
-            } : null;
-        
-            if(login){
-                res.cookie('saesLOGIN', login.credential, {
-                    sameSite: 'none'
-                });
-                res.json(login);
-            }
-            else{
-                res.json({message: 'Los datos de inicio de sesión son incorrectos.'});
-            }
-        }
-        catch(error){
-            res.json({
-                message: 'Se requieren más datos de inicio de sesión.',
-                error: error.message
-            });
-        }
+        const login = credential? {
+            username: loginData.username,
+            credentials: {
+                login: credential,
+                session: loginData.credential
+            },
+            time: Date.now(),
+            updateAfter: Date.now() + 15*60*1000,
+            expires: Date.now() + 30*60*1000
+        } : null;
+
+        login? res.json(login) : res.json({message: 'Los datos de inicio de sesión son incorrectos.'});
     }
-    else{
-        res.json({message: 'Se requiere una credencial de sesión.'})
+    catch(error){
+        res.json({
+            message: 'Se requieren más datos de inicio de sesión.',
+            error: error.message
+        });
     }
 }
 
