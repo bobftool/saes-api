@@ -4,7 +4,9 @@ async function session(req, res){
     try{
         const session = await saes.session();
 
-        res.cookie('saesSESSION', session.credential);
+        res.cookie('saesSESSION', session.credential, {
+            sameSite: 'none'
+        });
         res.json(session);
     }
     catch(error){
@@ -34,7 +36,9 @@ async function login(req, res){
             } : null;
         
             if(login){
-                res.cookie('saesLOGIN', login.credential);
+                res.cookie('saesLOGIN', login.credential, {
+                    sameSite: 'none'
+                });
                 res.json(login);
             }
             else{
