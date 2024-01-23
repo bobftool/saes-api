@@ -63,7 +63,7 @@ async function session(){
     return session;
 }
 
-async function authenticate(loginData){
+async function authenticate(credential, loginData){
     const data = {
         '__VIEWSTATE': '/wEPDwUJNDM4MjMwNTM1D2QWAmYPZBYCAgMPZBYKAgEPDxYCHghJbWFnZVVybAUVfi9JbWFnZXMvbG9nb3MvNjQucG5nZGQCBQ88KwANAgAPFgIeC18hRGF0YUJvdW5kZ2QMFCsAAgUDMDowFCsAAhYSHgVWYWx1ZQUGSW5pY2lvHglEYXRhQm91bmRnHghTZWxlY3RlZGceBFRleHQFBkluaWNpbx4LTmF2aWdhdGVVcmwFDS9kZWZhdWx0LmFzcHgeB0VuYWJsZWRnHgpTZWxlY3RhYmxlZx4HVG9vbFRpcAUGSW5pY2lvHghEYXRhUGF0aAUNL2RlZmF1bHQuYXNweBQrAAQFCzA6MCwwOjEsMDoyFCsAAhYQHwUFClJlZ2xhbWVudG8fAgUKUmVnbGFtZW50bx8GBRgvUmVnbGFtZW50by9EZWZhdWx0LmFzcHgfCQUKUmVnbGFtZW50bx8HZx8IZx8KBRgvcmVnbGFtZW50by9kZWZhdWx0LmFzcHgfA2dkFCsAAhYQHwUFBUF5dWRhHwIFBUF5dWRhHwYFES9BeXVkYS9BeXVkYS5hc3B4HwkFBUF5dWRhHwdnHwhnHwoFES9heXVkYS9heXVkYS5hc3B4HwNnZBQrAAIWEB8FBRVSZWN1cGVyYXIgQ29udHJhc2XDsWEfAgUVUmVjdXBlcmFyIENvbnRyYXNlw7FhHwYFHC9TZW5kRW1haWwvUmVjdXBlcmFQYXNzLmFzcHgfCQUqUmVjdXBlcmFyIGxhIENvbnRyYXNlw7FhIGRlIGFjY2VzbyBhbCBTQUVTHwdnHwhnHwoFHC9zZW5kZW1haWwvcmVjdXBlcmFwYXNzLmFzcHgfA2dkZAIID2QWAgIDDw8WAh8FBYcSPENFTlRFUj4gIDxkaXYgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6IzZDMTQ1ODsgY29sb3I6d2hpdGU7IGZvbnQtc2l6ZToxNnB4OyBmb250LXdlaWdodDpib2xkOyBXaWR0aDo1MDBweCI+SW5ncmVzYSBhIHJlYWxpemFyIHR1IGRlbnVuY2lhwqBzZWd1cmEgZW46PGJyPiA8YSBocmVmPSIgaHR0cHM6Ly9kZW51bmNpYXNlZ3VyYS5pcG4ubXgvaW5kZXgucGhwP3I9c2l0ZS9jb25kaWNpb25lcyAgIj48ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOndoaXRlOyBjb2xvcjpibHVlOyBmb250LXNpemU6MTdweDsgZm9udC13ZWlnaHQ6Ym9sZDsgV2lkdGg6NTAwcHgiPmRlbnVuY2lhc2VndXJhLmlwbi5teDwvZGl2PjwvYT48L2Rpdj48L0NFTlRFUj4gPGRpdiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjp3aGl0ZTsgZm9udC1zaXplOjVweDsgV2lkdGg6NTAwcHgiPiAgPGJyPjwvZGl2PiAgPENFTlRFUj48ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiM2QzE0NTg7IGNvbG9yOndoaXRlOyBmb250LXNpemU6MTZweDsgZm9udC13ZWlnaHQ6Ym9sZDsgV2lkdGg6NTAwcHgiPsK/TmVjZXNpdGFzIG9yaWVudGFjacOzbiBvIGxldmFudGFyIHVuYSBxdWVqYT/CoEluZ3Jlc2HCoGE6PGJyPiA8YSBocmVmPSIgaHR0cHM6Ly93d3cuaXBuLm14L2RlZmVuc29yaWEvb3JpZW50YWNpb24tcXVlamEvcXVlamEuaHRtbCAgIj48ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOndoaXRlOyBjb2xvcjpibHVlOyBmb250LXNpemU6MTdweDsgZm9udC13ZWlnaHQ6Ym9sZDsgV2lkdGg6NTAwcHgiPnd3dy5pcG4ubXgvZGVmZW5zb3JpYS9vcmllbnRhY2lvbi1xdWVqYS9xdWVqYS5odG1sPC9kaXY+IDwvYT4gPC9kaXY+PC9DRU5URVI+PENFTlRFUj48ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOndoaXRlOyBmb250LXNpemU6NXB4OyBXaWR0aDo1MDBweCI+ICA8YnI+PC9kaXY+ICA8ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiM2QzFENDUgO2NvbG9yOldISVRFOyBmb250LXNpemU6MTVweDsgZm9udC13ZWlnaHQ6Ym9sZDsgV2lkdGg6NjAwcHgiPkFob3JhIHF1ZSBoYXMgY29uY2x1aWRvIGNvbiB0dSBpbnNjcmlwY2nDs24sIGVzIGltcG9ydGFudGUgcXVlIG9idGVuZ2FzIHTDuiBOw7ptZXJvIGRlIFNlZ3VyaWRhZCBTb2NpYWwgKE5OUykuIEVuIGNhc28gZGUgcXVlIG5vIGN1ZW50ZXMgY29uIHVubywgaW5ncmVzYSBlbjo8L2Rpdj4gIDxkaXYgc3R5bGU9ImZvbnQtc2l6ZTo5cHg7IGZvbnQtd2VpZ2h0OmJvbGQ7IFdpZHRoOjYwMHB4Ij48YSBocmVmPSIgaHR0cHM6Ly9zZXJ2aWNpb3NkaWdpdGFsZXMuaW1zcy5nb2IubXgvZ2VzdGlvbkFzZWd1cmFkb3Mtd2ViLWV4dGVybm8vYXNpZ25hY2lvbk5TUztKU0VTU0lPTklEQVNFR0VYVEVSTk89WG95WDJUbTExQ1V4SDZLZlBRb2p3TGt2amRZN2s0RVVqbzhSbG1SdmwwQVBYTm1lQWtQdyEtNzc3NjIwOTc4ICI+aHR0cHM6Ly9zZXJ2aWNpb3NkaWdpdGFsZXMuaW1zcy5nb2IubXgvZ2VzdGlvbkFzZWd1cmFkb3Mtd2ViLWV4dGVybm8vYXNpZ25hY2lvbk5TUztKU0VTU0lPTklEQVNFR0VYVEVSTk89WG95WDJUbTExQ1V4SDZLZlBRb2p3TGt2amRZN2s0RVVqbzhSbG1SdmwwQVBYTm1lQWtQdyEtNzc3NjIwOTc4PGJyPjxicj48YnI+PC9hPjwvZGl2PiAgPGRpdiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojNkMxRDQ1IDtjb2xvcjpXSElURTsgZm9udC1zaXplOjE1cHg7IGZvbnQtd2VpZ2h0OmJvbGQ7IFdpZHRoOjYwMHB4Ij5VbmEgdmV6IHF1ZSB5YSBsbyB0ZW5nYXMgZmF2b3IgZGUgcmVnaXN0cmFydGUgZW46PC9kaXY+ICA8ZGl2IHN0eWxlPSJmb250LXNpemU6OXB4OyBmb250LXdlaWdodDpib2xkOyBXaWR0aDo2MDBweCI+PGEgaHJlZj0iIGh0dHBzOi8vd3d3LnNpc21pLmRzZS5pcG4ubXgvcG9ydGFsL2Y/cD0xMDAwOjEwMToxMDI1MzY4MjExMDc3NiAiPmh0dHBzOi8vd3d3LnNpc21pLmRzZS5pcG4ubXgvcG9ydGFsL2Y/cD0xMDAwOjEwMToxMDI1MzY4MjExMDc3Njxicj48YnI+PGJyPjwvYT48L2Rpdj4gIDxkaXYgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6IzZDMUQ0NSA7Y29sb3I6V0hJVEU7IGZvbnQtc2l6ZToxNXB4OyBmb250LXdlaWdodDpib2xkOyBXaWR0aDo2MDBweCI+UGFyYSBtYXlvciBpbmZvcm1hY2nDs24gcHVlZGVzIGVzY3JpYmlyIGEgZXN0ZSBjb3JyZW8gZWxlY3Ryw7NuaWNvOjwvZGl2PiAgPGRpdiBzdHlsZT0iY29sb3I6IzAwMzNGRjsgZm9udC1zaXplOjE1cHg7IGZvbnQtd2VpZ2h0OmJvbGQ7IFdpZHRoOjYwMHB4Ij5hZmlsaWFjaW9uaW1zc0BpcG4ubXg8L3N0cm9uZz48L2Rpdj4gIDwvQ0VOVEVSPmRkAgkPPCsADQEADxYCHwFnZGQCCg9kFgICAQ8WAh4HVmlzaWJsZWhkGAEFDmN0bDAwJG1haW5tZW51Dw9kBQZJbmljaW9kYnQg6L3m0RwzjcuZY9eD/He10d8=',
         '__VIEWSTATEGENERATOR': 'CA0B0334',
@@ -74,7 +74,7 @@ async function authenticate(loginData){
         'LBD_VCID_c_default_ctl00_leftcolumn_loginuser_logincaptcha': loginData.captcha.id,
         'ctl00$leftColumn$LoginUser$LoginButton': ''
     };
-    const cookie = 'ASP.NET_SessionId=' + loginData.credential;
+    const cookie = 'ASP.NET_SessionId=' + credential;
     const response = (await wrapper(axios.create({ jar: new CookieJar() })).post('https://www.saes.upiita.ipn.mx/', data, {
         headers: {
             Cookie: cookie,
@@ -82,8 +82,10 @@ async function authenticate(loginData){
         }
     })).config;
 
-    const credential = response.jar.toJSON().cookies[0]? response.jar.toJSON().cookies[0].value : null;
-
+    const credentials = {
+        login: response.jar.toJSON().cookies[0]? response.jar.toJSON().cookies[0].value : null,
+        session: credential
+    }
     /**
         const response = await axios.post('https://www.saes.upiita.ipn.mx/', data, {
             headers: {
@@ -98,7 +100,7 @@ async function authenticate(loginData){
         let credential = response.headers['set-cookie']? response.headers['set-cookie'][0].split('; ')[0].split('=')[1] : null;
     */
 
-    return credential;
+    return credentials;
 }
 
 async function getUserInfo(credentials){
@@ -199,8 +201,8 @@ async function getUserKardex(credentials){
         for(let j=2, m=userKardexTableContent.length; j<m; j++){
             let userKardexTableContentRowColumns = userKardexTableContent[j].getElementsByTagName('td');
             let userKardexTableContentRow = {
-                asignaturaClave: userKardexTableContentRowColumns[0].textContent,
-                asignaturaNombre: userKardexTableContentRowColumns[1].textContent,
+                clave: userKardexTableContentRowColumns[0].textContent,
+                asignatura: userKardexTableContentRowColumns[1].textContent,
                 fecha: userKardexTableContentRowColumns[2].textContent,
                 periodo: userKardexTableContentRowColumns[3].textContent,
                 formaEvaluacion: userKardexTableContentRowColumns[4].textContent,
@@ -232,8 +234,8 @@ async function getUserHorario(credentials){
         let userHorarioTableContentRowColumns = userHorarioTableContent[i].getElementsByTagName('td');
         let userHorarioTableContentRow = {
             grupo: userHorarioTableContentRowColumns[0].textContent.trim(),
-            asignaturaClave: userHorarioTableContentRowColumns[1].textContent.split('-')[0].trim(),
-            asignaturaNombre: userHorarioTableContentRowColumns[1].textContent.split('-')[1].trim(),
+            clave: userHorarioTableContentRowColumns[1].textContent.split('-')[0].trim(),
+            asignatura: userHorarioTableContentRowColumns[1].textContent.split('-')[1].trim(),
             profesor: userHorarioTableContentRowColumns[2].textContent.trim(),
             horas: {
                 lunes: userHorarioTableContentRowColumns[3].textContent.trim(),
@@ -268,8 +270,8 @@ async function getUserCalificaciones(credentials){
         let userCalificacionesTableContentRowColumns = userCalificacionesTableContent[i].getElementsByTagName('td');
         let userCalificacionesTableContentRow = {
             grupo: userCalificacionesTableContentRowColumns[0].textContent,
-            asignaturaClave: userCalificacionesTableContentRowColumns[1].textContent.split('-')[0],
-            asignaturaNombre: userCalificacionesTableContentRowColumns[1].textContent.split('-')[1],
+            clave: userCalificacionesTableContentRowColumns[1].textContent.split('-')[0],
+            asignatura: userCalificacionesTableContentRowColumns[1].textContent.split('-')[1],
             parcial1: userCalificacionesTableContentRowColumns[2].textContent,
             parcial2: userCalificacionesTableContentRowColumns[3].textContent,
             parcial3: userCalificacionesTableContentRowColumns[4].textContent,
@@ -340,7 +342,7 @@ async function getGeneralHorarios(credentials, upcoming){
                         turno: generalHorariosCarreraTurno,
                         periodo: generalHorariosCarreraPeriodo,
                         grupo: generalHorariosCarreraTableContentRowColumns[0].textContent,
-                        asignaturaNombre: generalHorariosCarreraTableContentRowColumns[1].textContent,
+                        asignatura: generalHorariosCarreraTableContentRowColumns[1].textContent,
                         profesor: generalHorariosCarreraTableContentRowColumns[2].textContent,
                         edificio: generalHorariosCarreraTableContentRowColumns[3].textContent,
                         aula: generalHorariosCarreraTableContentRowColumns[4].textContent,
@@ -476,8 +478,8 @@ async function getGeneralCupos(credentials){
             let generalCuposCarreraTableContentRow = {
                 carrera: generalCuposCarrera.id,
                 grupo: generalCuposCarreraTableContentRowColumns[0].textContent,
-                asignaturaClave: generalCuposCarreraTableContentRowColumns[1].textContent,
-                asignaturaNombre: generalCuposCarreraTableContentRowColumns[2].textContent,
+                clave: generalCuposCarreraTableContentRowColumns[1].textContent,
+                asignatura: generalCuposCarreraTableContentRowColumns[2].textContent,
                 periodo: generalCuposCarreraTableContentRowColumns[3].textContent,
                 cupo: generalCuposCarreraTableContentRowColumns[4].textContent,
                 inscritos: generalCuposCarreraTableContentRowColumns[5].textContent,

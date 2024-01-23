@@ -1,7 +1,10 @@
 const saes = require('../services/saes');
 
 async function getInfo(req, res){
-    const credentials = req.body.credentials?? res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
+    const credentials = req.headers.login && req.headers.session? {
+        login: req.headers.login,
+        session: req.headers.session
+    } : res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
 
     try{
         const userInfo = await saes.getUserInfo(credentials);
@@ -17,7 +20,10 @@ async function getInfo(req, res){
 }
 
 async function getKardex(req, res){
-    const credentials = req.body.credentials?? res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
+    const credentials = req.headers.login && req.headers.session? {
+        login: req.headers.login,
+        session: req.headers.session
+    } : res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
 
     try{
         const userKardex = await saes.getUserKardex(credentials);
@@ -33,7 +39,10 @@ async function getKardex(req, res){
 }
 
 async function getHorario(req, res){
-    const credentials = req.body.credentials?? res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
+    const credentials = req.headers.login && req.headers.session? {
+        login: req.headers.login,
+        session: req.headers.session
+    } : res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
 
     try{
         const userHorario = await saes.getUserHorario(credentials);
@@ -49,7 +58,10 @@ async function getHorario(req, res){
 }
 
 async function getCalificaciones(req, res){
-    const credentials = req.body.credentials?? res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
+    const credentials = req.headers.login && req.headers.session? {
+        login: req.headers.login,
+        session: req.headers.session
+    } : res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
 
     try{
         const userCalificaciones = await saes.getUserCalificaciones(credentials);

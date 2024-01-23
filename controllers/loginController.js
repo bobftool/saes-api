@@ -15,17 +15,15 @@ async function session(req, res){
 }
 
 async function login(req, res){
+    const credential = req.headers.session;
     const loginData = req.body;
 
     try{
-        const credential = await saes.authenticate(loginData);
+        const credentials = await saes.authenticate(credential, loginData);
     
-        const login = credential? {
+        const login = credentials? {
             username: loginData.username,
-            credentials: {
-                login: credential,
-                session: loginData.credential
-            },
+            credentials,
             time: Date.now(),
             updateAfter: Date.now() + 15*60*1000,
             expires: Date.now() + 30*60*1000

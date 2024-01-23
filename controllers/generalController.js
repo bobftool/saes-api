@@ -1,7 +1,10 @@
 const saes = require('../services/saes');
 
 async function getHorariosActual(req, res){
-    const credentials = req.body.credentials?? res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
+    const credentials = req.headers.login && req.headers.session? {
+        login: req.headers.login,
+        session: req.headers.session
+    } : res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
         
     try{
         const generalHorariosActual = await saes.getGeneralHorarios(credentials);
@@ -17,7 +20,10 @@ async function getHorariosActual(req, res){
 }
 
 async function getHorariosProximo(req, res){
-    const credentials = req.body.credentials?? res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
+    const credentials = req.headers.login && req.headers.session? {
+        login: req.headers.login,
+        session: req.headers.session
+    } : res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
 
     try{
         const generalHorariosProximo = await saes.getGeneralHorarios(credentials, true);
@@ -33,7 +39,10 @@ async function getHorariosProximo(req, res){
 }
 
 async function getAsignaturas(req, res){
-    const credentials = req.body.credentials?? res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
+    const credentials = req.headers.login && req.headers.session? {
+        login: req.headers.login,
+        session: req.headers.session
+    } : res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
 
     try{
         const generalAsignaturas = await saes.getGeneralAsignaturas(credentials);
@@ -49,7 +58,10 @@ async function getAsignaturas(req, res){
 }
 
 async function getCupos(req, res){
-    const credentials = req.body.credentials?? res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
+    const credentials = req.headers.login && req.headers.session? {
+        login: req.headers.login,
+        session: req.headers.session
+    } : res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
 
     try{
         const generalCupos = await saes.getGeneralCupos(credentials);
