@@ -10,17 +10,17 @@ async function getInfo(req, res){
         try{
             const userInfo = await saes.getUserInfo(credentials);
             
-            res.json(userInfo);
+            res.status(200).json(userInfo);
         }
         catch(error){
-            res.json({
+            res.status(500).json({
                 message: 'Ocurrió un error al conectar con el SAES.',
                 error: error.message
             });
         }
     }
     else{
-        res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
+        res.status(401).json({message: 'No cuentas con credenciales de inicio de sesión.'});
     }
 }
 
@@ -34,17 +34,17 @@ async function getKardex(req, res){
         try{
             const userKardex = await saes.getUserKardex(credentials);
     
-            res.json(userKardex);
+            res.status(200).json(userKardex);
         }
         catch(error){
-            res.json({
+            res.status(500).json({
                 message: 'Ocurrió un error al conectar con el SAES.',
                 error: error.message
             });
         }
     }
     else{
-        res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
+        res.status(401).json({message: 'No cuentas con credenciales de inicio de sesión.'});
     }
 }
 
@@ -58,17 +58,17 @@ async function getHorario(req, res){
         try{
             const userHorario = await saes.getUserHorario(credentials);
         
-            res.json(userHorario);
+            res.status(200).json(userHorario);
         }
         catch(error){
-            res.json({
+            res.status(500).json({
                 message: 'Ocurrió un error al conectar con el SAES.',
                 error: error.message
             });
         }
     }
     else{
-        res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
+        res.status(401).json({message: 'No cuentas con credenciales de inicio de sesión.'});
     }
 }
 
@@ -82,17 +82,17 @@ async function getCalificaciones(req, res){
         try{
             const userCalificaciones = await saes.getUserCalificaciones(credentials);
         
-            res.json(userCalificaciones);
+            res.status(200).json(userCalificaciones);
         }
         catch(error){
-            res.json({
+            res.status(500).json({
                 message: 'Ocurrió un error al conectar con el SAES.',
                 error: error.message
             });
         }
     }
     else{
-        res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
+        res.status(401).json({message: 'No cuentas con credenciales de inicio de sesión.'});
     }
 }
 

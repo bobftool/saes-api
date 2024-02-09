@@ -82,10 +82,10 @@ async function authenticate(credential, loginData){
         }
     })).config;
 
-    const credentials = {
-        login: response.jar.toJSON().cookies[0]? response.jar.toJSON().cookies[0].value : null,
+    const credentials = (response.jar.toJSON().cookies.length > 0)? {
+        login: response.jar.toJSON().cookies[0].value,
         session: credential
-    }
+    } : null;
     /**
         const response = await axios.post('https://www.saes.upiita.ipn.mx/', data, {
             headers: {

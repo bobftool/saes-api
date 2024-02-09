@@ -10,17 +10,17 @@ async function getHorariosActual(req, res){
         try{
             const generalHorariosActual = await saes.getGeneralHorarios(credentials);
     
-            res.json(generalHorariosActual);
+            res.status(200).json(generalHorariosActual);
         }
         catch(error){
-            res.json({
+            res.status(500).json({
                 message: 'Ocurrió un error al conectar con el SAES.',
                 error: error.message
             });
         }
     }
     else{
-        res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
+        res.status(401).json({message: 'No cuentas con credenciales de inicio de sesión.'});
     }
 }
 
@@ -34,17 +34,17 @@ async function getHorariosProximo(req, res){
         try{
             const generalHorariosProximo = await saes.getGeneralHorarios(credentials, true);
     
-            res.json(generalHorariosProximo);
+            res.status(200).json(generalHorariosProximo);
         }
         catch(error){
-            res.json({
+            res.status(500).json({
                 message: 'Ocurrió un error al conectar con el SAES.',
                 error: error.message
             });
         }
     }
     else{
-        res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
+        res.status(401).json({message: 'No cuentas con credenciales de inicio de sesión.'});
     }
 }
 
@@ -58,17 +58,17 @@ async function getAsignaturas(req, res){
         try{
             const generalAsignaturas = await saes.getGeneralAsignaturas(credentials);
     
-            res.json(generalAsignaturas);
+            res.status(200).json(generalAsignaturas);
         }
         catch(error){
-            res.json({
+            res.status(500).json({
                 message: 'Ocurrió un error al conectar con el SAES.',
                 error: error.message
             });
         }
     }
     else{
-        res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
+        res.status(401).json({message: 'No cuentas con credenciales de inicio de sesión.'});
     }
 }
 
@@ -82,17 +82,17 @@ async function getCupos(req, res){
         try{
             const generalCupos = await saes.getGeneralCupos(credentials);
     
-            res.json(generalCupos);
+            res.status(200).json(generalCupos);
         }
         catch(error){
-            res.json({
+            res.status(500).json({
                 message: 'Ocurrió un error al conectar con el SAES.',
                 error: error.message
             });
         }
     }
     else{
-        res.json({message: 'No cuentas con credenciales de inicio de sesión.'});
+        res.status(401).json({message: 'No cuentas con credenciales de inicio de sesión.'});
     }
 }
 
